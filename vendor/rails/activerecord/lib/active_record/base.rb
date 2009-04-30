@@ -736,12 +736,12 @@ module ActiveRecord #:nodoc:
       # ==== Parameters
       #
       # * +id+ - This should be the id or an array of ids to be updated.
-      # * +attributes+ - This should be a Hash of attributes to be set on the object, or an array of Hashes.
+      # * +attributes+ - This should be a hash of attributes to be set on the object, or an array of hashes.
       #
       # ==== Examples
       #
       #   # Updating one record:
-      #   Person.update(15, { :user_name => 'Samuel', :group => 'expert' })
+      #   Person.update(15, :user_name => 'Samuel', :group => 'expert')
       #
       #   # Updating multiple records:
       #   people = { 1 => { "first_name" => "David" }, 2 => { "first_name" => "Jeremy" } }
@@ -2228,12 +2228,12 @@ module ActiveRecord #:nodoc:
         #   ["name='%s' and group_id='%s'", "foo'bar", 4]  returns  "name='foo''bar' and group_id='4'"
         #   { :name => "foo'bar", :group_id => 4 }  returns "name='foo''bar' and group_id='4'"
         #   "name='foo''bar' and group_id='4'" returns "name='foo''bar' and group_id='4'"
-        def sanitize_sql_for_conditions(condition)
+        def sanitize_sql_for_conditions(condition, table_name = quoted_table_name)
           return nil if condition.blank?
 
           case condition
             when Array; sanitize_sql_array(condition)
-            when Hash;  sanitize_sql_hash_for_conditions(condition)
+            when Hash;  sanitize_sql_hash_for_conditions(condition, table_name)
             else        condition
           end
         end
