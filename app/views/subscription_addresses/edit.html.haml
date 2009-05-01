@@ -1,0 +1,8 @@
+- title "Edit Invoice Information"
+
+= error_messages_for :subscription_address
+
+- form_tag({:action => :update}, :method => :put) do
+  = render :partial => "subscription_address", :locals => {:subscription_address => @subscription_address}
+  
+  %p.input-button= submit_tag 'Update'

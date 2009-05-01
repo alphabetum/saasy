@@ -1,0 +1,30 @@
+- title 'Log In'
+
+- form_tag session_path do
+  %p.input-field.openid
+    = label_tag 'openid_url', 'OpenID'
+    = text_field_tag "openid_url", h(params[:openid_url])
+  
+  %p.input-indent.openid
+    = use_password_link
+
+  %p.input-field.password
+    = label_tag 'email'
+    = text_field_tag 'email', h(params[:email])
+
+  %p.input-field.password
+    = label_tag 'password'
+    = password_field_tag 'password', nil
+  
+  %p.input-indent.password
+    = use_openid_link
+  
+  %p.input-field.checkbox
+    = label_tag 'remember_me'
+    = check_box_tag 'remember_me', '1', h(params[:remember_me])
+
+  %p.input-button
+    = submit_tag 'Log in'
+
+- content_for(:head) do
+  = javascript_include_tag "credential_toggle"

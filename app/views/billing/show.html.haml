@@ -1,0 +1,47 @@
+- title 'Billing'
+
+- if @subscription.error?
+  .flash.error
+    = "There has been a problem charging your account - if your card information need #{link_to 'updating', :controller => 'subscriptions', :action => 'edit'}, please do so. We'll try again in a few days."
+
+%h3 Current plan
+%p
+  = "Your current plan is the #{@subscription.plan_name.humanize} one at #{humanize_plan @subscription.plan}."
+  = "Your account will next be charged on #{@subscription.next_renewal_at.to_s(:date)}."
+
+%h3 Change Plan
+- form_tag :action => :change_plan do
+  %p.inline
+    = select :subscription, :plan_name, plans
+    = submit_tag 'Change plan', :class => 'input-button'
+
+%h3 Update information
+%ol
+  %li= "Update payment information #{link_to 'here', :controller => 'subscriptions', :action => 'edit'}."
+  %li= "Update account invoice information #{link_to 'here', :controller => 'subscription_addresses', :action => 'edit'}."
+
+%h3 Invoices
+%ul
+  - @transactions.each do |trans|
+    %li
+      = link_to "#{trans.created_at.to_s(:date)} - #{trans.money.format}", :action => 'invoice', :id => trans.id, :format => 'pdf'
+  - if @transactions.empty?
+    %p None so far
+
+- users = User.other_account_users(@user).in_state(:active).all
+- if users.any?
+  %h3 Change account owner
+  - form_tag :action => :change_owner do
+    %p
+      Warning - you won't be able to view this page if you change the account owner.
+    %p.inline
+      = select_tag('owner_id', options_for_select( users.collect {|u| [u.name, u.id] } ))
+      = submit_tag 'Change account owner', :class => 'input-button'
+
+
+%h3 Cancel account
+%p
+  = button_to 'Cancel my account', {:action => 'cancel'}, :method => 'get', :style => 'float:right', :class => 'input-button'
+  We're sorry to see you leave. Once your account is cancelled you won't be charged again after your official cancellation date.
+  %br
+  You can always activate this account again by contacting us.

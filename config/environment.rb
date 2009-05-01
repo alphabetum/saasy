@@ -30,7 +30,8 @@ Rails::Initializer.run do |config|
   config.gem "lockfile"
   config.gem "prawn"
   config.gem "money"
-
+  config.gem "haml", :source => 'http://gems.github.com'
+  
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named

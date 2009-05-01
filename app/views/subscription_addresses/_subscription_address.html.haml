@@ -1,0 +1,23 @@
+%p.input-field
+  = label :subscription_address, :invoice_to
+  = text_field :subscription_address, :invoice_to
+
+%p.input-field
+  = label :subscription_address, :street, 'Street Address or PO Box'
+  = text_area :subscription_address, :street, :style => 'height:50px'
+
+%p.input-field
+  = label :subscription_address, :city, 'Town / City'
+  = text_field :subscription_address, :city
+
+%p.input-field
+  = label :subscription_address, :region, 'State / Region'
+  = text_field :subscription_address, :region
+
+%p.input-field
+  = label :subscription_address, :postcode, 'Postal code'
+  = text_field :subscription_address, :postcode
+
+%p.input-field
+  = label :subscription_address, :country
+  = country_select :subscription_address, :country, ["United States", "United Kingdom"]

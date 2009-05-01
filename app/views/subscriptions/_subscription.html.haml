@@ -1,0 +1,24 @@
+%p.input-field
+  = label :card, :first_name, 'Card first name'
+  = text_field :card, :first_name
+
+%p.input-field
+  = label :card, :last_name, 'Card last name'
+  = text_field :card, :last_name
+
+%p.input-field
+  = label  :card, :type, 'Card type'
+  = select :card, :type, card_types
+
+%p.input-field
+  = label :card, :number 
+  = text_field :card, :number, :autocomplete => "off"
+
+%p.input-field.inline
+  = label :card, :month, 'Expiration'
+  = select :card, :month, month_names, :selected => Time.now.month
+  = select :card, :year, next_fifteen_years
+
+%p.input-field
+  = label :card, :verification_value, 'Verification'
+  = text_field :card, :verification_value, :style => "width:40px", :autocomplete => "off"
